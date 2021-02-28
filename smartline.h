@@ -15,6 +15,14 @@ namespace smarline {
 		void add(std::string l,std::string s, callback call) {
 			vector.push_back(std::make_pair(std::make_pair(l,s),call));
 		}
+
+		void add(std::initializer_list<std::initializer_list<std::string>> list,callback call) {
+			for (auto it = list.begin(); it != list.end(); ++it) {
+				for (auto i = it->begin(); i != it->end(); ++i) {
+					vector.push_back(std::make_pair(std::make_pair(*i, *i), call));
+				}	
+			}
+		}
 		auto parse(int argc,char*argv[]) {
 			bool available = false;
 			for (auto i = 0; i < argc; ++i) {
@@ -25,7 +33,7 @@ namespace smarline {
 					if (pair.first == cmd || pair.second == cmd) {
 						available = true;
 						e.second();
-						continue;
+						exit(0);
 					}
 				}
 			}
